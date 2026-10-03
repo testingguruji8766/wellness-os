@@ -1,0 +1,5 @@
+[build.environment]
+  # Supabase anon keys are public by design (protected by Row Level Security) and
+  # Next.js inlines NEXT_PUBLIC_* values into the client bundle, so exclude it from
+  # secrets scanning. Other secrets (e.g. SUPABASE_SERVICE_ROLE_KEY) are still scanned.
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SUPABASE_ANON_KEY"
