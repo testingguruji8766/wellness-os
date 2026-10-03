@@ -1,0 +1,657 @@
+Build a minimal Wellness Management System using:
+
+- Next.js
+- TypeScript
+- Tailwind CSS
+- Supabase PostgreSQL
+- Supabase Auth
+- Supabase Row Level Security
+- Vercel for deployment
+
+The system is designed for a wellness business that offers services such as yoga, meditation, occult science sessions, workshops, courses, batches and special offers.
+
+The application must have one Admin Panel and two test User accounts.
+
+Do not use React separately. Use Next.js App Router.
+
+1. User Roles
+
+Admin
+
+The admin can:
+
+- Manage users
+- Create, edit and delete batches
+- Create, edit and delete workshops
+- Create, edit and delete offers
+- Publish/unpublish content
+- View registrations
+- View dashboard statistics
+
+User
+
+Users can:
+
+- View published batches
+- View published workshops
+- View active offers
+- Register for batches/workshops
+- View their registrations
+- Manage their profile
+
+Users must never have access to the Admin Panel.
+
+---
+
+2. Test Accounts
+
+Create setup instructions for:
+
+Admin
+
+admin@test.com
+
+User 1
+
+user1@test.com
+
+User 2
+
+user2@test.com
+
+Passwords must be configurable and must not be hardcoded into production code.
+
+Use Supabase Auth for authentication.
+
+---
+
+3. Important Data Requirement
+
+The system must contain NO hardcoded business content.
+
+Do not hardcode:
+
+- Workshop names
+- Yoga batches
+- Festival names
+- Offers
+- Prices
+- Instructors
+- Dates
+- User registrations
+
+The database should initially contain no business content.
+
+The Admin creates all content through the Admin Panel.
+
+---
+
+4. Public Landing Page
+
+Create a simple professional landing page containing:
+
+- Navigation
+- Hero section
+- About section
+- Services
+- Workshops
+- Offers
+- Login/Register buttons
+- Footer
+
+Published workshops, services and offers may be displayed dynamically from Supabase.
+
+If the database is empty, show appropriate empty states.
+
+---
+
+5. User Panel
+
+After login, users should see:
+
+Dashboard
+
+Show:
+
+- Available batches
+- Upcoming workshops
+- Active offers
+- My registrations
+
+Use dynamically retrieved Supabase data.
+
+---
+
+6. Batches
+
+Users can browse batches published by the admin.
+
+Each batch can contain:
+
+Name
+Category
+Description
+Instructor
+Schedule
+Start Time
+End Time
+Capacity
+Price
+Status
+Published
+
+Users can open the batch details and register.
+
+Display an appropriate message when:
+
+- Batch is full
+- Batch is unpublished
+- User is already registered
+
+---
+
+7. Workshops
+
+Users can browse workshops created by the admin.
+
+Fields:
+
+Title
+Category
+Description
+Date
+Start Time
+End Time
+Venue
+Instructor
+Capacity
+Price
+Status
+Published
+
+Users can:
+
+- View details
+- Register
+
+Only published workshops should appear to normal users.
+
+---
+
+8. Offers
+
+The admin can create offers.
+
+Fields:
+
+Offer Name
+Description
+Discount Type
+Discount Value
+Start Date
+End Date
+Applicable Batch/Workshop
+Status
+Published
+
+Support:
+
+- Percentage discount
+- Fixed amount discount
+
+Only currently valid and published offers should appear to users.
+
+---
+
+9. Registrations
+
+When a user registers for a batch or workshop, create a registration record.
+
+Store:
+
+User ID
+Batch ID or Workshop ID
+Registration Date
+Status
+
+Registration status:
+
+- Confirmed
+- Pending
+- Cancelled
+
+Prevent duplicate registration for the same user and batch/workshop.
+
+---
+
+10. My Registrations
+
+Users should be able to see:
+
+Item
+Type
+Registration Date
+Status
+
+Users can only see their own registrations.
+
+---
+
+11. User Profile
+
+Users can manage:
+
+Name
+Phone
+Date of Birth
+Profile Information
+
+Email should be handled through Supabase Auth.
+
+---
+
+12. Admin Panel
+
+Create a separate protected Admin Panel.
+
+Navigation:
+
+Dashboard
+
+Users
+Batches
+Workshops
+Offers
+Registrations
+
+The Admin Panel must only be accessible to the admin role.
+
+---
+
+13. Admin Dashboard
+
+Show dynamically calculated:
+
+Total Users
+Active Users
+Total Batches
+Published Workshops
+Active Offers
+Total Registrations
+
+Also show:
+
+- Recent registrations
+- Upcoming workshops
+
+Do not use hardcoded statistics.
+
+---
+
+14. Admin — Users
+
+Admin can:
+
+- View users
+- Search users
+- View user profile
+- Activate/deactivate users
+- View their registrations
+
+Do not expose authentication passwords.
+
+---
+
+15. Admin — Batches
+
+Admin can:
+
+- Create
+- Edit
+- Delete/archive
+- Publish/unpublish
+- Set capacity
+- Set schedule
+- Set instructor
+- Set price
+- View registrations
+
+---
+
+16. Admin — Workshops
+
+Admin can:
+
+- Create
+- Edit
+- Delete/archive
+- Publish/unpublish
+- Set date/time
+- Set venue
+- Set capacity
+- Set instructor
+- Set price
+- View registrations
+
+---
+
+17. Admin — Offers
+
+Admin can:
+
+- Create
+- Edit
+- Delete
+- Publish/unpublish
+- Set discount
+- Set validity dates
+- Assign offer to a batch/workshop
+
+---
+
+18. Admin — Registrations
+
+Admin can view all registrations.
+
+Display:
+
+User
+Batch/Workshop
+Registration Date
+Status
+
+Admin can update registration status.
+
+---
+
+19. Database
+
+Use Supabase PostgreSQL.
+
+Create:
+
+profiles
+batches
+workshops
+offers
+registrations
+
+Relationships:
+
+auth.users
+    ↓
+profiles
+    ↓
+registrations
+    ↓
+batches / workshops
+
+offers
+    ↓
+batches / workshops
+
+Use UUID primary keys, foreign keys, timestamps and appropriate indexes.
+
+---
+
+20. Authentication
+
+Use Supabase Auth.
+
+Implement:
+
+- Login
+- Registration
+- Logout
+- Protected routes
+- Admin authorization
+- User authorization
+
+Use a role field in the user profile.
+
+Example:
+
+role = admin
+role = user
+
+Do not rely only on frontend role checks.
+
+---
+
+21. Row Level Security
+
+Implement Supabase RLS.
+
+Users can:
+
+- View published batches
+- View published workshops
+- View active offers
+- Create their own registrations
+- View their own registrations
+- Update their own profile
+
+Users must not:
+
+- Modify batches
+- Modify workshops
+- Modify offers
+- View other users' private information
+- View or modify other users' registrations
+- Access admin functionality
+
+Admin has appropriate management permissions.
+
+---
+
+22. UI Design
+
+Create a clean, modern SaaS interface.
+
+Style:
+
+- Minimal
+- Professional
+- Wellness-oriented
+- Light neutral background
+- White cards
+- Green/olive accent
+- Rounded corners
+- Subtle shadows
+- Good spacing
+- Responsive design
+
+Avoid excessive spiritual or mystical graphics.
+
+The product should look like professional management software.
+
+---
+
+23. Navigation
+
+User
+
+Dashboard
+Batches
+Workshops
+Offers
+My Registrations
+Profile
+Logout
+
+Admin
+
+Dashboard
+Users
+Batches
+Workshops
+Offers
+Registrations
+Logout
+
+---
+
+24. Empty States
+
+Because the admin creates all business content, handle empty states properly.
+
+Examples:
+
+No batches available yet.
+
+No workshops have been published yet.
+
+No active offers available.
+
+You have no registrations yet.
+
+Do not create fake business data.
+
+---
+
+25. Responsive Design
+
+The application must work on:
+
+- Desktop
+- Tablet
+- Mobile
+
+Use a responsive sidebar/navigation.
+
+---
+
+26. Project Structure
+
+Use a clean structure:
+
+app/
+├── page.tsx
+├── login/
+├── register/
+├── dashboard/
+├── batches/
+├── workshops/
+├── offers/
+├── registrations/
+├── profile/
+│
+└── admin/
+    ├── page.tsx
+    ├── users/
+    ├── batches/
+    ├── workshops/
+    ├── offers/
+    └── registrations/
+
+components/
+├── ui/
+├── admin/
+├── user/
+└── shared/
+
+lib/
+├── supabase/
+├── auth/
+└── utils/
+
+types/
+
+Use Server Components by default and Client Components only when necessary.
+
+---
+
+27. Error Handling
+
+Implement loading, success and error states.
+
+Examples:
+
+Workshop created successfully.
+
+Registration successful.
+
+Unable to load workshops.
+
+You are already registered.
+
+This workshop is full.
+
+---
+
+28. Explicitly Excluded
+
+Do NOT implement:
+
+- Payments
+- Payment gateway
+- Payment records
+- WhatsApp
+- WhatsApp API
+- Email automation
+- SMS
+- AI chatbot
+- Subscription billing
+- Multi-tenancy
+- Advanced analytics
+
+Keep this as a focused MVP.
+
+---
+
+29. Final User Flow
+
+User
+
+Landing Page
+      ↓
+Register/Login
+      ↓
+User Dashboard
+      ↓
+Browse Batches
+      ↓
+Browse Workshops
+      ↓
+View Offers
+      ↓
+Register
+      ↓
+My Registrations
+
+Admin
+
+Admin Login
+      ↓
+Admin Dashboard
+      ↓
+Create Batch
+      ↓
+Create Workshop
+      ↓
+Create Offer
+      ↓
+Publish Content
+      ↓
+Users See Published Content
+      ↓
+Users Register
+      ↓
+Admin Views Registrations
+
+The application should start with only the three test accounts and an otherwise empty business database.
+
+The admin must be able to populate the entire application through the Admin Panel.
+
+Provide:
+
+1. Complete Next.js source code
+2. Supabase SQL schema
+3. RLS policies
+4. Authentication setup
+5. Role-based authorization
+6. Test-account setup instructions
+7. ".env.example"
+8. README
+9. Local development instructions
+10. Vercel deployment instructions
