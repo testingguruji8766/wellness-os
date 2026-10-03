@@ -47,8 +47,8 @@ export default async function WorkshopsPage() {
               {w.description && <p className="text-sm text-neutral-500 mb-4 line-clamp-2">{w.description}</p>}
               <div className="flex items-center justify-between mt-auto pt-4 border-t border-neutral-100">
                 <span className="text-lg font-bold text-primary-600">{formatCurrency(w.price)}</span>
-                <span className="text-xs text-primary-600 font-medium flex items-center gap-1">
-                  View Details <ChevronRight size={14} />
+                <span className="btn-primary text-xs py-1.5 px-3">
+                  Register Now →
                 </span>
               </div>
             </Link>

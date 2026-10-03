@@ -8,17 +8,18 @@ import Link from 'next/link'
 import type { Batch } from '@/types'
 
 interface Props {
-  params: { id: string }
+  params: Promise<{ id: string }> | { id: string }
 }
 
 export default async function BatchDetailPage({ params }: Props) {
+  const { id } = await Promise.resolve(params)
   const profile = await requireUser()
   const supabase = await createClient()
 
   const { data: batch } = await supabase
     .from('batches')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single()
 
   if (!batch) notFound()

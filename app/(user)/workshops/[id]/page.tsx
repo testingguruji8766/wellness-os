@@ -8,17 +8,18 @@ import Link from 'next/link'
 import type { Workshop } from '@/types'
 
 interface Props {
-  params: { id: string }
+  params: Promise<{ id: string }> | { id: string }
 }
 
 export default async function WorkshopDetailPage({ params }: Props) {
+  const { id } = await Promise.resolve(params)
   const profile = await requireUser()
   const supabase = await createClient()
 
   const { data: workshop } = await supabase
     .from('workshops')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single()
 
   if (!workshop) notFound()
