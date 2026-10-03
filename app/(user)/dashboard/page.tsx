@@ -14,23 +14,20 @@ async function getDashboardData(userId: string) {
         .from('batches')
         .select('id,name,category,instructor,schedule,price,capacity,enrolled_count')
         .eq('is_published', true)
-        .eq('status', 'active')
         .order('created_at', { ascending: false })
-        .limit(3),
+        .limit(4),
       supabase
         .from('workshops')
         .select('id,title,category,date,venue,instructor,price')
         .eq('is_published', true)
-        .gte('date', new Date().toISOString().split('T')[0])
-        .order('date', { ascending: true })
-        .limit(3),
+        .order('created_at', { ascending: false })
+        .limit(4),
       supabase
         .from('offers')
         .select('id,name,description,discount_type,discount_value,end_date')
         .eq('is_published', true)
-        .lte('start_date', new Date().toISOString())
-        .gte('end_date', new Date().toISOString())
-        .limit(3),
+        .order('created_at', { ascending: false })
+        .limit(4),
       supabase
         .from('registrations')
         .select('id,registration_date,status,batch_id,workshop_id,batch:batches(id,name),workshop:workshops(id,title)')

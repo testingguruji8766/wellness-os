@@ -12,8 +12,6 @@ export default async function OffersPage() {
     .from('offers')
     .select('*, batch:batches(id,name), workshop:workshops(id,title)')
     .eq('is_published', true)
-    .lte('start_date', new Date().toISOString())
-    .gte('end_date', new Date().toISOString())
     .order('created_at', { ascending: false })
 
   const list = (offers ?? []) as Offer[]

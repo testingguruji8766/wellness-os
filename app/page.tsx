@@ -12,21 +12,19 @@ async function getPublicData() {
       .from('batches')
       .select('id,name,category,description,instructor,schedule,price,capacity,enrolled_count')
       .eq('is_published', true)
-      .eq('status', 'active')
       .order('created_at', { ascending: false })
       .limit(4),
     supabase
       .from('workshops')
       .select('id,title,category,description,date,venue,instructor,price,capacity,enrolled_count')
       .eq('is_published', true)
-      .order('date', { ascending: true })
+      .order('created_at', { ascending: false })
       .limit(4),
     supabase
       .from('offers')
       .select('id,name,description,discount_type,discount_value,end_date')
       .eq('is_published', true)
-      .lte('start_date', new Date().toISOString())
-      .gte('end_date', new Date().toISOString())
+      .order('created_at', { ascending: false })
       .limit(3),
   ])
 
